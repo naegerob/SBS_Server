@@ -4,6 +4,7 @@ import com.example.plugins.*
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
+import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -27,7 +28,6 @@ class ApplicationTest {
         {
             // Handle requests here!
 
-
         }.apply {
             // Handle responses here!
             assertEquals(HttpStatusCode.OK, status)
@@ -36,7 +36,6 @@ class ApplicationTest {
         var jsonString = ""
         try {
             val fileName = "log_2.json"
-
             jsonString = File(fileName).readText(Charsets.UTF_8)
 
             val sType = object : TypeToken<ArrayList<JsonEntry>>(){}.type
@@ -52,12 +51,16 @@ class ApplicationTest {
             contentType(ContentType.Application.Json)
             body = jsonString
             //println(body)
-        }
-        .apply {
+        }.apply {
             println("CLIENT POST!")
             assertEquals(HttpStatusCode.OK, status)
             println(bodyAsText())
             assertEquals(jsonString, bodyAsText())
+        }
+        client.put {
+
+        }.apply {
+
         }
     }
 }

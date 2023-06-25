@@ -5,10 +5,10 @@ import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
+import io.ktor.util.pipeline.*
 
 fun Application.configureRouting() {
     routing {
-
         get("/") {
 
             call.respondText("Hello World!")
@@ -20,9 +20,10 @@ fun Application.configureRouting() {
         get("/json/gson") {
             call.respond(mapOf("hello" to "world"))
         }
-        post {
+        post ("/") {
             val jsonString = call.receive<String>()
             call.respondText(jsonString)
+
         }
 
     }
