@@ -22,7 +22,7 @@ fun Application.configureRouting() {
         }
         post ("/") {
             val jsonString = call.receive<String>()
-            call.respondText(jsonString)
+            call.respondText("TEST")
 
         }
 
