@@ -1,4 +1,4 @@
-package com.example.plugins
+package com.example.database
 
 data class JsonEntry(
     val index: Int,
