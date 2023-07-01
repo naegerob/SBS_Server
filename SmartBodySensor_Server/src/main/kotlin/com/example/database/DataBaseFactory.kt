@@ -1,6 +1,6 @@
 package com.example.dao
 
-import com.example.database.`JsonEntries.kt`
+import com.example.database.BodyValues
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -11,10 +11,11 @@ object DatabaseFactory {
     fun init() {
         val driverClassName = "org.h2.Driver"
         val jdbcURL = "jdbc:h2:file:./build/db"
+        // calling connect does not connect to DB yet, only writing/reading to it
         val database = Database.connect(jdbcURL, driverClassName)
 
         transaction(database) {
-            SchemaUtils.create(`JsonEntries.kt`)
+            SchemaUtils.create(BodyValues)
         }
     }
     suspend fun <T> dbQuery(block: suspend () -> T): T =
