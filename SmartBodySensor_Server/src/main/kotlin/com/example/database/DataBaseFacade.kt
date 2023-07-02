@@ -5,7 +5,7 @@ import com.example.database.JsonEntry
 interface DAOFacade {
     suspend fun allEntries(): List<JsonEntry>
     suspend fun entry(id: Int): JsonEntry?
-    suspend fun addNewEntry(title: String, body: String): JsonEntry?
-    suspend fun editEntry(id: Int, title: String, body: String): Boolean
+    suspend fun addNewEntry(index: Int, tempDifference: Double, voltage: Double): JsonEntry?
+    suspend fun editEntry(id: Int, index: Int, tempDifference: Double, voltage: Double): Boolean
     suspend fun deleteEntry(id: Int): Boolean
 }
