@@ -20,6 +20,14 @@ application {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("http://repo.mycompany.com/repo")
+        metadataSources {
+            mavenPom()
+            artifact()
+        }
+    }
+
 }
 
 dependencies {
@@ -36,6 +44,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("com.h2database:h2:$h2_version")
     implementation("com.google.code.gson:gson:2.8.9")
+    implementation("io.ktor:ktor-freemarker:$ktor_version")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+
 }

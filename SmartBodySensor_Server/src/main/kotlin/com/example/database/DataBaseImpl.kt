@@ -51,13 +51,12 @@ class DataBaseImpl : DAOFacade {
         JsonEntries.deleteWhere { JsonEntries.id eq id } > 0
     }
 
+}
 
-    val dao: DAOFacade = DataBaseImpl().apply {
-        runBlocking {
-            if(allEntries().isEmpty()) {
-                addNewEntry(1, 5.2, 3.6)
-            }
+val dao: DAOFacade = DataBaseImpl().apply {
+    runBlocking {
+        if(allEntries().isEmpty()) {
+            addNewEntry(1, 5.2, 3.6)
         }
     }
-
 }
