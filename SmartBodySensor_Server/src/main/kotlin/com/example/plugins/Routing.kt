@@ -1,14 +1,12 @@
 package com.example.plugins
 
-import io.ktor.client.statement.*
-import io.ktor.server.routing.*
-import io.ktor.server.response.*
-import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.util.pipeline.*
 import com.example.database.dao
+import io.ktor.server.application.*
+import io.ktor.server.freemarker.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import io.ktor.freemarker.FreeMarkerContent
 
 fun Application.configureRouting() {
     routing {
