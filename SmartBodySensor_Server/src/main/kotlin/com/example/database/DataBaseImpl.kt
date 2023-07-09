@@ -3,7 +3,6 @@ package com.example.database
 import com.example.dao.DAOFacade
 import com.example.dao.DatabaseFactory.dbQuery
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
@@ -50,7 +49,6 @@ class DataBaseImpl : DAOFacade {
     override suspend fun deleteEntry(id: Int): Boolean = dbQuery {
         JsonEntries.deleteWhere { JsonEntries.id eq id } > 0
     }
-
 }
 
 val dao: DAOFacade = DataBaseImpl().apply {
