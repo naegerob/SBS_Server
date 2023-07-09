@@ -7,10 +7,12 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class DataBaseImpl : DAOFacade {
-    /*
-    * Helper function which transforms the entries in the database
-    * into the object JsonEntry
-    * */
+
+
+    /**
+     * Helper function which transforms the entries in the database
+     * into the object JsonEntry
+     */
     private fun resultRowToEntry(row: ResultRow) = JsonEntry(
             id = row[JsonEntries.id],
             index = row[JsonEntries.index],
@@ -18,10 +20,16 @@ class DataBaseImpl : DAOFacade {
             batteryLevel = row[JsonEntries.voltage],
         )
 
+    /**
+     * Returns all entries from the database
+     */
     override suspend fun allEntries(): List<JsonEntry> = dbQuery  {
         JsonEntries.selectAll().map(::resultRowToEntry)
     }
 
+    /**
+     * returns an entry which matches the specific id
+     */
     override suspend fun entry(id: Int): JsonEntry? = dbQuery {
         JsonEntries
             .select{JsonEntries.id eq id}
@@ -29,6 +37,9 @@ class DataBaseImpl : DAOFacade {
             .singleOrNull()
     }
 
+    /**
+     * Insert a new entry in the db. The id will be generated
+     */
     override suspend fun addNewEntry(index: Int, tempDifference: Double, voltage: Double): JsonEntry? = dbQuery {
         val insertStatement = JsonEntries.insert {
             it[JsonEntries.index] = index
@@ -38,6 +49,9 @@ class DataBaseImpl : DAOFacade {
         insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToEntry)
     }
 
+    /**
+     * update existing entry in db.
+     */
     override suspend fun editEntry(id: Int, index: Int, tempDifference: Double, voltage: Double): Boolean = dbQuery {
        JsonEntries.update ({ JsonEntries.id eq id}) {
            it[JsonEntries.index] = index
@@ -46,15 +60,17 @@ class DataBaseImpl : DAOFacade {
        } > 0
     }
 
+    /**
+     * delete entry and returns boolean if successful.
+     */
     override suspend fun deleteEntry(id: Int): Boolean = dbQuery {
         JsonEntries.deleteWhere { JsonEntries.id eq id } > 0
     }
-}
 
-val dao: DAOFacade = DataBaseImpl().apply {
-    runBlocking {
-        if(allEntries().isEmpty()) {
-            addNewEntry(1, 5.2, 3.6)
-        }
-    }
+    override suspend fun existsEntry(id: Int): Boolean  = dao.entry(id) is JsonEntry
+
 }
+/**
+ * Initialization
+ */
+val dao: DAOFacade = DataBaseImpl()

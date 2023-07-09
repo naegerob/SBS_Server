@@ -18,6 +18,7 @@ object DatabaseFactory {
         transaction(database) {
             SchemaUtils.create(JsonEntries)
             // all SQL statements are here!
+
         }
     }
     suspend fun <T> dbQuery(block: suspend () -> T): T =

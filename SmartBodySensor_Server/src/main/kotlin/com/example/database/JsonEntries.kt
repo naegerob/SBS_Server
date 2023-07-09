@@ -1,6 +1,7 @@
 package com.example.database
 
 
+import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 
 object JsonEntries : Table() {
@@ -10,4 +11,6 @@ object JsonEntries : Table() {
     val voltage = double("voltage")
 
     override val primaryKey = PrimaryKey(id)
+
+
 }

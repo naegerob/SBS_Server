@@ -8,4 +8,5 @@ interface DAOFacade {
     suspend fun addNewEntry(index: Int, tempDifference: Double, voltage: Double): JsonEntry?
     suspend fun editEntry(id: Int, index: Int, tempDifference: Double, voltage: Double): Boolean
     suspend fun deleteEntry(id: Int): Boolean
+    suspend fun existsEntry(id: Int): Boolean
 }
