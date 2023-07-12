@@ -1,7 +1,5 @@
 package com.example.plugins
 
-import com.example.database.JsonEntries
-import com.example.database.JsonEntry
 import com.example.database.dao
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.server.application.*
@@ -10,8 +8,6 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.util.*
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureRouting() {
     install(FreeMarker) {
@@ -32,18 +28,26 @@ fun Application.configureRouting() {
             //val jsonString = call.receive<String>()
             println("POST")
             val formParameters = call.receiveParameters()
+
             val index = formParameters.getOrFail("index").toInt()
             val tempDifference = formParameters.getOrFail("tempDifference").toDouble()
             val voltage = formParameters.getOrFail("voltage").toDouble()
             val jsonEntries = dao.addNewEntry(index, tempDifference, voltage)
-            call.respondRedirect("/jsonentries/${jsonEntries?.id}")
-            call.respond("Inserted!")
 
+
+            call.respondRedirect("/jsonentries/${jsonEntries?.id}")
+            call.respond(formParameters)
+
+/*
+            val formParameters = call.receive<String>()
+            call.respond(formParameters)
+*/
         }
         post("{id}") {
             val id = call.parameters.getOrFail<Int>("id").toInt()
-            val formParameters = call.receiveParameters()
-            val index = formParameters.getOrFail("index").toInt()
+            //val formParameters = call.receiveParameters()
+            val formParameters = call.receive<String>()
+            /*val index = formParameters.getOrFail("index").toInt()
             val tempDifference = formParameters.getOrFail("tempDifference").toDouble()
             val voltage = formParameters.getOrFail("voltage").toDouble()
 
@@ -63,6 +67,9 @@ fun Application.configureRouting() {
                     call.respondRedirect("/jsonentries")
                 }
             }
+            */
+            call.respond(formParameters)
+
         }
 
 
