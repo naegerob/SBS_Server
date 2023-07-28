@@ -34,7 +34,6 @@ fun Application.configureRouting() {
             val voltage = formParameters.getOrFail("voltage").toDouble()
             val jsonEntries = dao.addNewEntry(index, tempDifference, voltage)
 
-
             call.respondRedirect("/jsonentries/${jsonEntries?.id}")
             call.respond(formParameters)
 
@@ -43,33 +42,32 @@ fun Application.configureRouting() {
             call.respond(formParameters)
 */
         }
-        post("{id}") {
-            val id = call.parameters.getOrFail<Int>("id").toInt()
+        // With {} you can extract Values in URL whereas the string within here
+        // as index counts and the value can be read by using call.parameter
+        post("{id}/{id1}") {
+            val id = call.parameters.getOrFail<Int>("id")
+
+            if (call.parameters["id"] == "0")
+            {
+                println("Zero received")
+            }
+            if(call.parameters["id1"] == "1")
+            {
+                println("one received")
+            }
+            println(id)
             //val formParameters = call.receiveParameters()
-            val formParameters = call.receive<String>()
-            /*val index = formParameters.getOrFail("index").toInt()
-            val tempDifference = formParameters.getOrFail("tempDifference").toDouble()
-            val voltage = formParameters.getOrFail("voltage").toDouble()
+            //val formParameters = call.receive<String>()
 
-            if(dao.existsEntry(id)) {
-                dao.editEntry(id, index, tempDifference, voltage)
-            } else {
-                dao.addNewEntry(index, tempDifference, voltage)
-            }
-            when (formParameters.getOrFail("_action")) {
-                "update" -> {
+            //call.respond(formParameters)
 
-                    dao.editEntry(id, index, tempDifference, voltage)
-                    call.respondRedirect("/jsonentries/$id")
-                }
-                "delete" -> {
-                    dao.deleteEntry(id)
-                    call.respondRedirect("/jsonentries")
-                }
-            }
-            */
-            call.respond(formParameters)
-
+        }
+        // similar to path parameters.
+        // The paramName is given in the URL whereas it is assigned
+        // by a value/string ?paramName=ghjk
+        post("/query") {
+            val name = call.request.queryParameters["paramName"]
+            println(name)
         }
 
 
