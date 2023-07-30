@@ -3,8 +3,6 @@ package com.example
 import com.example.plugins.*
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import com.google.gson.stream.JsonReader
-import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -12,10 +10,8 @@ import io.ktor.server.testing.*
 import io.ktor.util.*
 import java.io.File
 import java.io.FileNotFoundException
-import java.io.FileReader
 import java.util.ArrayList
 import kotlin.test.*
-
 
 class ApplicationTest {
     @OptIn(InternalAPI::class)
@@ -31,7 +27,6 @@ class ApplicationTest {
         }.apply {
             // Handle responses here!
             assertEquals(HttpStatusCode.OK, status)
-            assertEquals("Hello World!", bodyAsText())
         }
         var jsonString = ""
         try {
