@@ -2,7 +2,6 @@ package com.example.database
 
 import com.example.dao.DAOFacade
 import com.example.dao.DatabaseFactory.dbQuery
-import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
@@ -65,6 +64,10 @@ class DataBaseImpl : DAOFacade {
      */
     override suspend fun deleteEntry(id: Int): Boolean = dbQuery {
         JsonEntries.deleteWhere { JsonEntries.id eq id } > 0
+    }
+
+    override suspend fun deleteAll() : Boolean = dbQuery {
+        JsonEntries.deleteAll() > 0
     }
 
     override suspend fun existsEntry(id: Int): Boolean  = dao.entry(id) is JsonEntry

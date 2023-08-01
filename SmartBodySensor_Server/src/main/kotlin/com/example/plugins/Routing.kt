@@ -15,6 +15,7 @@ fun Application.configureRouting() {
         /* GET */
         get("/") {
             call.respond(dao.allEntries())
+
         }
         get("/{id}") {
             val id = call.parameters.getOrFail<Int>("id")
@@ -22,15 +23,18 @@ fun Application.configureRouting() {
             call.respond(mapOf("entry" to jsonEntry))
         }
 
+        get ("/reset") {
+            dao.deleteAll()
+            call.respond(HttpStatusCode.OK)
+        }
+
         /* POST */
         post ("/") {
             val formParameters = call.receiveParameters()
-            println("CALLED!")
             try {
                 val index = formParameters.getOrFail("index").toInt()
                 val tempDifference = formParameters.getOrFail("tempDifference").toDouble()
                 val voltage = formParameters.getOrFail("voltage").toDouble()
-                println("$index $tempDifference $voltage")
                 dao.addNewEntry(index, tempDifference, voltage)
             } catch (e: MissingRequestParameterException)
             {
