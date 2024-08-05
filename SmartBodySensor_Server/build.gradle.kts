@@ -18,19 +18,9 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
+
 repositories {
     mavenCentral()
-    /*
-    maven {
-        url = uri("http://repo.mycompany.com/repo")
-        metadataSources {
-            mavenPom()
-            artifact()
-        }
-    }
-    */
-
-
 }
 
 dependencies {
@@ -38,6 +28,7 @@ dependencies {
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-websockets-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
     implementation("io.ktor:ktor-serialization-gson-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")

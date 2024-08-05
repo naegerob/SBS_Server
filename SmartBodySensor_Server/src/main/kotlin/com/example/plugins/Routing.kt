@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.database.JsonEntry
 import com.example.database.dao
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -27,16 +28,24 @@ fun Application.configureRouting() {
             dao.deleteAll()
             call.respond(HttpStatusCode.OK)
         }
-
+        post ("/test") {
+            val formParameters = call.receiveParameters()
+            println(formParameters)
+        }
         /* POST */
         post ("/") {
+
             val formParameters = call.receiveParameters()
+            println(formParameters)
             try {
+
                 val index = formParameters.getOrFail("index").toInt()
                 val tempDifference = formParameters.getOrFail("tempDifference").toDouble()
                 val voltage = formParameters.getOrFail("voltage").toDouble()
                 dao.addNewEntry(index, tempDifference, voltage)
+
             } catch (e: MissingRequestParameterException)
+
             {
                 call.respond(HttpStatusCode.BadRequest)
             }
